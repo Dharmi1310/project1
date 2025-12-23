@@ -1,55 +1,89 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
-namespace MyWebApp.Controllers
+﻿using MySql.Data.MySqlClient;
+using System.Reflection.PortableExecutable;
+public class Student
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public int Student_Id { get; set; }
+    public string Student_Name { get; set; }
+    public int Student_Class { get; set; }
+}
+public class StudentMAnagement
+{
+    private string location = "Server=localhost;user id=root;password=1122;database=Employeedb";
+    public void Addstu()
     {
-        // Sample data
-        private static readonly List<string> Products = new List<string>
-        {
-            "Laptop",
-            "Phone",
-            "Tablet"
-        };
+        Student st = new Student();
 
-        // GET: api/products
-        [HttpGet]
-        public IActionResult GetAll()
+        Console.WriteLine("enter student id");
+        st.Student_Id =int.Parse(Console.ReadLine());
+
+        Console.WriteLine("enter student name");
+        st.Student_Name = Console.ReadLine();
+
+        Console.WriteLine("enter student Class");
+        st.Student_Class = int.Parse(Console.ReadLine());
+
+        MySqlConnection con = new MySqlConnection(location);
+        con.Open();
+
+        string query = "insert into student(Student_Id,Student_Name,Student_Class) values(@Student_Id,@Student_Name,@Student_Class)";
+
+        using(MySqlCommand cmd=new MySqlCommand(query, con)) 
         {
-            return Ok(Products);
+
+            cmd.Parameters.AddWithValue("@Student_Id", st.Student_Id);
+            cmd.Parameters.AddWithValue("@Student_Name", st.Student_Name);
+            cmd.Parameters.AddWithValue("@Student_Class", st.Student_Class);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Employee added successfully!");
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
+        viewal();
+    }
+    public void Delete()
+    {
+        Console.WriteLine("enter the student id");
+        int Student_Id = int.Parse(Console.ReadLine());
 
-        // GET: api/products/1
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        using (MySqlConnection con=new MySqlConnection(location))
         {
-            if (id < 0 || id >= Products.Count)
-                return NotFound();
+            con.Open();
+            string query = "delete from student where Student_Id=@Student_Id";
+            using (MySqlCommand cmd=new MySqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Student_Id",Student_Id);
 
-            return Ok(Products[id]);
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                    Console.WriteLine("Employee deleted successfully!");
+                else
+                    Console.WriteLine("Id not found in database.");
+            }
         }
-
-        // POST: api/products
-        [HttpPost]
-        public IActionResult Create([FromBody] string product)
+    }
+    public void viewal()
+    {
+        using(MySqlConnection con=new MySqlConnection(location))
         {
-            Products.Add(product);
-            return CreatedAtAction(nameof(GetById), new { id = Products.Count - 1 }, product);
-        }
-
-        // DELETE: api/products/1
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            if (id < 0 || id >= Products.Count)
-                return NotFound();
-
-            var product = Products[id];
-            Products.RemoveAt(id);
-            return Ok(product);
+            con.Open();
+            string query = "select * from student";
+            using(MySqlCommand cmd =new MySqlCommand(query , con))
+            {
+                using(MySqlDataReader reader= cmd.ExecuteReader())
+                {
+                    Console.WriteLine("Student_Id\t Student_Name\t Student_Class");
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["Student_Id"]}\t\t{reader["Student_Name"]}\t\t{reader["Student_Class"]}");
+                    }
+                }
+            }
         }
     }
 }
