@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | GoTracRat</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eee;
+        }
+        .login-container {
+            width: 900px;
+            height: 420px;
+            background: #fff;
+            display: flex;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .login-left {
+            width: 50%;
+            padding: 40px;
+        }
+        .login-left h2 {
+            margin: 0;
+        }
+        .login-left p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+        }
+        .input-group span {
+            width: 40px;
+            text-align: center;
+            background: #f5f5f5;
+            border-right: 1px solid #ccc;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .actions button {
+            background: #d7261e;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+        .actions a {
+            color: #d7261e;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .login-right {
+            width: 50%;
+            background: #d7261e;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+        .login-right h1 {
+            margin-bottom: 10px;
+        }
+        .login-right p {
+            font-size: 14px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-left">
+        <h2>Login</h2>
+        <p>Sign in to your account</p>
+
+        <div class="input-group">
+            <span>👤</span>
+            <input type="text" placeholder="Username">
+        </div>
+
+        <div class="input-group">
+            <span>🔒</span>
+            <input type="password" placeholder="Password">
+        </div>
+
+        <div class="actions">
+            <button>Login</button>
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
+
+    <div class="login-right">
+        <h1>Food Delivery</h1>
+        <h3>Get your Tasty Buds</h3>
+        <p>
+            TracRat® is the most advanced online electric motor management
+            software or repairable asset management solution available.
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
